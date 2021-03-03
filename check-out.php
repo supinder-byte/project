@@ -24,15 +24,18 @@
 		$id = $_GET['id'];
 		$res = mysqli_query($dbc,"SELECT * FROM bookinventory WHERE inventory_id=".$id);
 		$row = mysqli_fetch_array($res);
+		$_SESSION['inventory_id'] = $id;
 		$product = $row['product_name'];
         $_SESSION['product'] = $product;
+		$quantity = $row['stock_status'];
+		$_SESSION['quantity'] = $quantity;
 		 echo "<div class= product>";
 			  echo "<div class= product_info>";
 			   $img = "images" .'/'. $row['product_image'];
                 echo "<img src='$img' width = '250px' height = '300px'><br>";
               echo "<b>Product Name : </b> ".$product."<br>";
               echo "<b>Price : </b> $".$row['price']."<br>";
-              echo "<b>Quantity : </b>".$row['stock_status']."<br></div>";
+              echo "<b>Quantity : </b>".$quantity."<br></div>";
 
 		$fnameErr = $lnameErr = "";
        $fname = $lname = $success= "";

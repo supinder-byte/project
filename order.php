@@ -21,11 +21,15 @@ session_start();
    else{
 	   $fname = filter_var($_POST["fname"], FILTER_SANITIZE_STRING);
 	   $lname = filter_var($_POST["lname"], FILTER_SANITIZE_STRING);
+	   $inventory_id = $_SESSION[inventory_id];
 	   $product = $_SESSION["product"];
+	   $quantity = $_SESSION['quantity'];
 	   $payType= $_POST['payType'];
 	   $sql = "INSERT INTO place_order (FirstName, LastName, Product,Order_Date, Payment_Type) VALUES ('$fname', '$lname', '$product',now(),'$payType')";
        if (mysqli_query($dbc, $sql))
 	   {
+		$sqlUpdate = "UPDATE bookinventory SET stock_status = stock_status-1  WHERE inventory_id=".$inventory_id;
+        $UpdateInventory=@mysqli_query($dbc,$sqlUpdate);
 	    header('location:done.php');
 	   }
 	   else
